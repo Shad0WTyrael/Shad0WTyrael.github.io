@@ -1,7 +1,292 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=320,height=320,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>ONI BLUE // KRAKEN Z3</title>
+<style>
+:root{
+  --cyan:#19bfff; --blue:#0077ff; --ice:#bfefff;
+  --bg:#01050b; --panel:rgba(1,10,19,.72);
+  --line:rgba(25,191,255,.52); --danger:#ff315d;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000}
+body{font-family:Arial,Helvetica,sans-serif;color:#dff8ff}
+#screen{
+  position:relative;width:100vw;height:100vh;max-width:320px;max-height:320px;
+  margin:auto;overflow:hidden;background:#000;
+  isolation:isolate;
+}
+#hero{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:50% 48%;
+  filter:brightness(.58) contrast(1.25) saturate(1.2);
+  animation:heroPulse 4s ease-in-out infinite;
+}
+#screen::before{
+  content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 48%,rgba(0,150,255,.20),transparent 45%),
+    linear-gradient(90deg,rgba(0,140,255,.08),transparent 25%,transparent 75%,rgba(0,140,255,.08)),
+    repeating-linear-gradient(0deg,transparent 0 3px,rgba(80,210,255,.035) 4px);
+}
+#screen::after{
+  content:"";position:absolute;inset:4px;z-index:30;pointer-events:none;
+  border:1px solid rgba(20,190,255,.6);
+  box-shadow:inset 0 0 28px rgba(0,130,255,.16),0 0 18px rgba(0,140,255,.15);
+}
+@keyframes heroPulse{
+  0%,100%{transform:scale(1);filter:brightness(.58) contrast(1.25) saturate(1.2)}
+  50%{transform:scale(1.018);filter:brightness(.68) contrast(1.35) saturate(1.35)}
+}
+
+.hud{position:absolute;z-index:10;inset:0;pointer-events:none}
+.header{position:absolute;left:11px;right:11px;top:8px;display:flex;justify-content:space-between;align-items:flex-start}
+.brand{font-weight:900;font-size:11px;line-height:11px;letter-spacing:1.8px;color:var(--cyan);text-shadow:0 0 8px var(--cyan)}
+.brand small{display:block;margin-top:2px;font-size:5px;letter-spacing:1.8px;color:#8cdfff}
+.status{font-size:5px;font-weight:800;letter-spacing:1.2px;color:#9ceaff;text-align:right}
+.dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);margin-right:3px}
+
+.gauge{
+  position:absolute;width:82px;height:82px;border-radius:50%;
+  display:grid;place-items:center;--p:0deg;
+}
+.gauge::before{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:conic-gradient(var(--cyan) 0 var(--p),rgba(0,80,130,.28) var(--p) 360deg);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 5px),#000 calc(100% - 4px));
+  filter:drop-shadow(0 0 5px rgba(0,190,255,.8));
+  transition:--p .45s ease;
+}
+.gauge::after{
+  content:"";position:absolute;inset:7px;border:1px dashed rgba(90,220,255,.35);
+  border-radius:50%;animation:spin 11s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gauge .inner{position:relative;z-index:2;text-align:center;text-shadow:0 0 7px rgba(0,170,255,.5)}
+.name{font-size:6px;font-weight:900;letter-spacing:1.5px;color:#7fdfff}
+.value{font-family:Consolas,monospace;font-size:17px;font-weight:900;line-height:18px;color:white}
+.value b{font-size:6px;color:var(--cyan)}
+.sub{font:700 5px Consolas,monospace;color:#9fe9ff;margin-top:2px}
+#cpu{left:6px;top:53px}
+#gpu{right:6px;top:53px}
+#ram{left:7px;bottom:30px}
+#kraken{right:7px;bottom:30px}
+#kraken .value{font-size:16px}
+
+.arc{
+  position:absolute;z-index:5;border:1px solid rgba(30,195,255,.25);
+  border-radius:50%;pointer-events:none;animation:arcPulse 2.8s ease-in-out infinite;
+}
+.arc.a{width:104px;height:104px;left:-5px;top:42px}
+.arc.b{width:104px;height:104px;right:-5px;top:42px;animation-delay:.4s}
+.arc.c{width:104px;height:104px;left:-5px;bottom:19px;animation-delay:.8s}
+.arc.d{width:104px;height:104px;right:-5px;bottom:19px;animation-delay:1.2s}
+@keyframes arcPulse{0%,100%{opacity:.35}50%{opacity:.75;box-shadow:0 0 12px rgba(0,160,255,.15)}}
+
+.center{
+  position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);
+  width:84px;height:72px;z-index:7;text-align:center;
+}
+.center::before{
+  content:"";position:absolute;inset:4px;border-radius:50%;
+  border:1px solid rgba(35,205,255,.22);
+  box-shadow:0 0 18px rgba(0,140,255,.18);
+  animation:centerPulse 2.4s ease-in-out infinite;
+}
+@keyframes centerPulse{50%{transform:scale(1.06);opacity:.7}}
+.eyes{position:absolute;left:19px;right:19px;top:25px;height:10px}
+.eye{
+  position:absolute;top:3px;width:18px;height:5px;
+  background:#4bd7ff;border-radius:100% 0 100% 0;
+  box-shadow:0 0 8px 2px #00aaff;
+  animation:eyeGlow 1.4s ease-in-out infinite;
+}
+.eye.l{left:3px;transform:rotate(13deg)}
+.eye.r{right:3px;transform:rotate(-13deg)}
+@keyframes eyeGlow{50%{opacity:1;box-shadow:0 0 14px 4px #00aaff}}
+.oni{position:absolute;bottom:7px;left:0;right:0;font-size:6px;font-weight:900;letter-spacing:2px;color:#7ee7ff}
+
+.badge{
+  position:absolute;left:50%;top:135px;transform:translateX(-50%);
+  padding:3px 7px;border:1px solid rgba(35,200,255,.55);
+  background:rgba(0,20,35,.65);font:900 5px Arial;letter-spacing:1.1px;color:#b9efff;
+  white-space:nowrap;
+}
+
+.card{
+  position:absolute;z-index:12;padding:3px 5px;min-width:52px;
+  border:1px solid rgba(30,190,255,.38);background:var(--panel);
+  font:5px Consolas,monospace;color:#9eeaff;text-align:center;
+}
+#cpuExtra{left:5px;top:140px}
+#gpuExtra{right:5px;top:140px}
+
+.footer{
+  position:absolute;left:8px;right:8px;bottom:5px;z-index:14;
+  display:flex;justify-content:space-between;align-items:end;
+  font:5px Consolas,monospace;letter-spacing:.6px;color:#6fb8d5;
+}
+.scan{
+  position:absolute;z-index:25;left:0;right:0;top:0;height:1px;
+  background:rgba(80,220,255,.38);box-shadow:0 0 7px var(--cyan);
+  animation:scan 4s linear infinite;
+}
+@keyframes scan{to{top:100%}}
+.corner{position:absolute;z-index:31;width:11px;height:11px;border-color:var(--cyan)}
+.tl{left:7px;top:7px;border-left:1px solid;border-top:1px solid}
+.tr{right:7px;top:7px;border-right:1px solid;border-top:1px solid}
+.bl{left:7px;bottom:7px;border-left:1px solid;border-bottom:1px solid}
+.br{right:7px;bottom:7px;border-right:1px solid;border-bottom:1px solid}
+
+#danger{
+  position:absolute;left:50%;top:150px;transform:translateX(-50%);
+  z-index:24;padding:3px 8px;border:1px solid var(--danger);
+  background:rgba(60,0,15,.78);color:#fff;
+  font:900 6px Arial;letter-spacing:1px;box-shadow:0 0 14px var(--danger);
+  opacity:0;transition:.2s;
+}
+#screen.danger #danger{opacity:1;animation:dangerBlink .5s infinite alternate}
+#screen.danger .gauge::before{
+  background:conic-gradient(var(--danger) 0 var(--p),rgba(100,0,25,.3) var(--p) 360deg);
+  filter:drop-shadow(0 0 7px rgba(255,30,80,.95));
+}
+#screen.danger .eye{background:#ff315d;box-shadow:0 0 12px 4px #ff174f}
+#screen.danger::after{border-color:rgba(255,35,80,.9);box-shadow:inset 0 0 30px rgba(255,0,60,.22),0 0 22px rgba(255,0,60,.2)}
+@keyframes dangerBlink{from{opacity:.5}to{opacity:1}}
+
+#mock{position:absolute;z-index:40;left:50%;bottom:17px;transform:translateX(-50%);font:5px Arial;color:#77dfff}
+</style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+<div id="screen">
+  <img id="hero" src="crowned-enigma-in-blue-light-backiee-4K.jpg" alt="">
+  <div class="hud">
+    <div class="header">
+      <div class="brand">NZXT // KRAKEN Z3<small>ONI BLUE // HOLOGRAPHIC CORE</small></div>
+      <div class="status"><span class="dot"></span><span id="status">CAM LINK</span></div>
+    </div>
+
+    <div class="arc a"></div><div class="arc b"></div><div class="arc c"></div><div class="arc d"></div>
+
+    <div class="gauge" id="cpu"><div class="inner">
+      <div class="name">CPU</div><div class="value"><span id="cpuT">--</span><b>°C</b></div>
+      <div class="sub"><span id="cpuL">--</span>% LOAD</div>
+    </div></div>
+
+    <div class="gauge" id="gpu"><div class="inner">
+      <div class="name">GPU</div><div class="value"><span id="gpuT">--</span><b>°C</b></div>
+      <div class="sub"><span id="gpuL">--</span>% LOAD</div>
+    </div></div>
+
+    <div class="gauge" id="ram"><div class="inner">
+      <div class="name">RAM</div><div class="value"><span id="ramP">--</span><b>%</b></div>
+      <div class="sub"><span id="ramU">--</span>/<span id="ramA">--</span> GB</div>
+    </div></div>
+
+    <div class="gauge" id="kraken"><div class="inner">
+      <div class="name">KRAKEN</div><div class="value"><span id="liq">--</span><b>°C</b></div>
+      <div class="sub">LIQUID TEMP</div>
+    </div></div>
+
+    <div class="center">
+      <div class="eyes"><i class="eye l"></i><i class="eye r"></i></div>
+      <div class="oni">ONI // BLUE CORE</div>
+    </div>
+
+    <div class="badge">HOLOGRAPHIC MONITOR // 1Hz</div>
+
+    <div class="card" id="cpuExtra">FREQ <b id="cpuF">----</b> MHz · PWR <b id="cpuW">--</b>W</div>
+    <div class="card" id="gpuExtra">FREQ <b id="gpuF">----</b> MHz · PWR <b id="gpuW">--</b>W</div>
+
+    <div id="danger">⚠ DANGER // TEMP ≥ 80°C ⚠</div>
+
+    <div class="footer">
+      <span>◈ ICE PROTOCOL // LIVE</span><span>320×320 // Z3</span>
+    </div>
+
+    <div class="scan"></div>
+    <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  const $ = (id) => document.getElementById(id);
+  const n = (v) => (typeof v === "number" && Number.isFinite(v)) ? v : null;
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+  function text(id, value) {
+    $(id).textContent = value == null ? "--" : value;
+  }
+
+  function gauge(id, percent) {
+    const p = percent == null ? 0 : clamp(percent, 0, 100);
+    $(id).style.setProperty("--p", (p * 3.6) + "deg");
+  }
+
+  function mibToGiB(value) {
+    return value == null ? null : value / 1024;
+  }
+
+  function update(data) {
+    if (!data) return;
+
+    const cpu = Array.isArray(data.cpus) && data.cpus.length ? data.cpus[0] : null;
+    const gpu = Array.isArray(data.gpus) && data.gpus.length ? data.gpus[0] : null;
+    const ram = data.ram || null;
+    const kraken = data.kraken || null;
+
+    const cpuLoad = cpu && n(cpu.load) != null ? cpu.load * 100 : null;
+    const gpuLoad = gpu && n(gpu.load) != null ? gpu.load * 100 : null;
+
+    const ramTotal = ram && n(ram.totalSize) != null ? mibToGiB(ram.totalSize) : null;
+    const ramUsed = ram && n(ram.inUse) != null ? mibToGiB(ram.inUse) : null;
+    const ramPercent = ramTotal && ramUsed != null ? (ramUsed / ramTotal) * 100 : null;
+
+    const cpuTemp = cpu ? n(cpu.temperature) : null;
+    const gpuTemp = gpu ? n(gpu.temperature) : null;
+    const liquidTemp = kraken ? n(kraken.liquidTemperature) : null;
+
+    text("cpuT", cpuTemp == null ? null : Math.round(cpuTemp));
+    text("gpuT", gpuTemp == null ? null : Math.round(gpuTemp));
+    text("cpuL", cpuLoad == null ? null : Math.round(cpuLoad));
+    text("gpuL", gpuLoad == null ? null : Math.round(gpuLoad));
+
+    text("ramP", ramPercent == null ? null : Math.round(ramPercent));
+    text("ramU", ramUsed == null ? null : ramUsed.toFixed(1));
+    text("ramA", ramTotal == null ? null : ramTotal.toFixed(1));
+
+    text("liq", liquidTemp == null ? null : Math.round(liquidTemp));
+
+    text("cpuF", cpu && n(cpu.frequency) != null ? Math.round(cpu.frequency) : null);
+    text("gpuF", gpu && n(gpu.frequency) != null ? Math.round(gpu.frequency) : null);
+    text("cpuW", cpu && n(cpu.power) != null ? Math.round(cpu.power) : null);
+    text("gpuW", gpu && n(gpu.power) != null ? Math.round(gpu.power) : null);
+
+    gauge("cpu", cpuLoad);
+    gauge("gpu", gpuLoad);
+    gauge("ram", ramPercent);
+    gauge("kraken", liquidTemp == null ? null : clamp((liquidTemp / 60) * 100, 0, 100));
+
+    // No invented status: it only changes to DANGER when CAM actually reports >= 80°C.
+    const danger = (cpuTemp != null && cpuTemp >= 80) || (gpuTemp != null && gpuTemp >= 80);
+    $("screen").classList.toggle("danger", danger);
+    $("status").textContent = danger ? "DANGER" : "CAM LIVE";
+  }
+
+  // NZXT CAM injects this callback and sends monitoring data once per second.
+  window.nzxt = window.nzxt || {};
+  window.nzxt.v1 = window.nzxt.v1 || {};
+  window.nzxt.v1.onMonitoringDataUpdate = update;
+
+  // Until CAM sends the first packet, the UI stays explicitly unknown ("--").
+  $("status").textContent = "WAITING CAM";
+})();
+</script>
 </body>
 </html>
