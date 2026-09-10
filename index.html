@@ -24,10 +24,6 @@ body {
     color: #dffcff;
 }
 
-/* =========================
-   CIRCULAR KRAKEN DISPLAY
-   ========================= */
-
 #screen {
     position: relative;
     width: 320px;
@@ -38,7 +34,6 @@ body {
     clip-path: circle(50% at 50% 50%);
 }
 
-/* Background */
 #background {
     position: absolute;
     inset: 0;
@@ -46,14 +41,10 @@ body {
     height: 100%;
     object-fit: cover;
     object-position: center;
-    opacity: .82;
-    filter:
-        brightness(.58)
-        contrast(1.18)
-        saturate(1.15);
+    opacity: .72;
+    filter: brightness(.48) contrast(1.2) saturate(1.2);
 }
 
-/* Blue atmospheric overlay */
 #screen::before {
     content: "";
     position: absolute;
@@ -63,43 +54,40 @@ body {
     background:
         radial-gradient(
             circle at center,
-            transparent 25%,
-            rgba(0, 110, 255, .08) 48%,
-            rgba(0, 0, 0, .72) 82%,
-            rgba(0, 0, 0, .95) 100%
+            transparent 20%,
+            rgba(0,110,255,.08) 48%,
+            rgba(0,0,0,.7) 82%,
+            rgba(0,0,0,.96) 100%
         );
 }
 
-/* Circular glass border */
 #screen::after {
     content: "";
     position: absolute;
     inset: 2px;
     z-index: 20;
-    border: 1px solid rgba(85, 225, 255, .75);
+    border: 1px solid rgba(85,225,255,.75);
     border-radius: 50%;
     box-shadow:
-        0 0 8px rgba(0, 180, 255, .65),
-        inset 0 0 20px rgba(0, 100, 255, .25);
+        0 0 8px rgba(0,180,255,.65),
+        inset 0 0 20px rgba(0,100,255,.25);
     pointer-events: none;
 }
 
-/* =========================
-   TOP HUD
-   ========================= */
+/* HEADER */
 
 .header {
     position: absolute;
     z-index: 8;
-    top: 19px;
-    left: 48px;
-    right: 48px;
+    top: 25px;
+    left: 58px;
+    right: 58px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 7px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
 }
 
 .title {
@@ -112,140 +100,86 @@ body {
     text-shadow: 0 0 6px #00ffc8;
 }
 
-.status.danger {
-    color: #ff426e;
-    text-shadow: 0 0 7px #ff003d;
-}
-
-/* =========================
-   CENTER
-   ========================= */
-
-.center {
-    position: absolute;
-    z-index: 6;
-    left: 50%;
-    top: 49%;
-    transform: translate(-50%, -50%);
-    width: 105px;
-    height: 105px;
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-.center-ring {
-    position: absolute;
-    inset: 0;
-    border: 1px solid rgba(55, 210, 255, .38);
-    border-radius: 50%;
-    box-shadow:
-        0 0 12px rgba(0, 170, 255, .2),
-        inset 0 0 12px rgba(0, 170, 255, .12);
-}
-
-.center-ring::before {
-    content: "";
-    position: absolute;
-    inset: 8px;
-    border: 1px dashed rgba(82, 226, 255, .28);
-    border-radius: 50%;
-}
-
-.center-ring::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 3px;
-    height: 3px;
-    transform: translate(-50%, -50%);
-    background: #a9f8ff;
-    border-radius: 50%;
-    box-shadow: 0 0 9px #00d9ff;
-}
-
-/* =========================
-   GAUGES
-   ========================= */
+/* GAUGES */
 
 .gauge {
     position: absolute;
     z-index: 9;
-    width: 68px;
+    width: 82px;
     text-align: center;
 }
 
 #cpu {
-    left: 25px;
-    top: 61px;
+    left: 34px;
+    top: 62px;
 }
 
 #gpu {
-    right: 25px;
-    top: 61px;
+    right: 34px;
+    top: 62px;
 }
 
 #ram {
-    left: 25px;
-    bottom: 42px;
+    left: 34px;
+    bottom: 49px;
 }
 
 #kraken {
-    right: 25px;
-    bottom: 42px;
+    right: 34px;
+    bottom: 49px;
 }
 
 .gauge-label {
-    font-size: 7px;
-    letter-spacing: 1.3px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
     color: #66dfff;
-    text-shadow: 0 0 5px #00aaff;
-    margin-bottom: 3px;
+    text-shadow: 0 0 6px #00aaff;
+    margin-bottom: 2px;
 }
 
 .gauge-value {
-    font-size: 20px;
-    line-height: 20px;
-    font-weight: 700;
-    color: #e8fdff;
+    font-size: 27px;
+    line-height: 27px;
+    font-weight: 800;
+    color: #efffff;
     text-shadow:
-        0 0 5px #00bfff,
-        0 0 12px rgba(0, 180, 255, .7);
+        0 0 6px #00bfff,
+        0 0 14px rgba(0,180,255,.8);
 }
 
 .gauge-unit {
-    font-size: 6px;
-    color: #8fd8e8;
+    font-size: 8px;
+    font-weight: 600;
+    color: #9cdeea;
     letter-spacing: 1px;
 }
 
-/* =========================
-   DATA CARDS
-   ========================= */
+/* DATA CARDS */
 
 .card {
     position: absolute;
     z-index: 9;
-    width: 68px;
-    font-size: 6px;
-    line-height: 10px;
-    color: #83cbd9;
+    width: 83px;
+    font-size: 8px;
+    line-height: 13px;
+    color: #8bd5e4;
 }
 
 .card strong {
-    color: #d9fbff;
-    font-size: 7px;
+    color: #efffff;
+    font-size: 9px;
 }
 
 .card-left {
-    left: 43px;
-    top: 148px;
+    left: 38px;
+    top: 158px;
     text-align: left;
 }
 
 .card-right {
-    right: 43px;
-    top: 148px;
+    right: 38px;
+    top: 158px;
     text-align: right;
 }
 
@@ -253,103 +187,123 @@ body {
     white-space: nowrap;
 }
 
-/* =========================
-   CENTRAL BADGE
-   ========================= */
+/* CENTER */
+
+.center {
+    position: absolute;
+    z-index: 6;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.center-ring {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(55,210,255,.38);
+    border-radius: 50%;
+    box-shadow:
+        0 0 14px rgba(0,170,255,.25),
+        inset 0 0 14px rgba(0,170,255,.15);
+}
+
+.center-ring::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border: 1px dashed rgba(82,226,255,.3);
+    border-radius: 50%;
+}
+
+/* BADGE */
 
 .badge {
     position: absolute;
     z-index: 10;
     left: 50%;
-    top: 133px;
+    top: 135px;
     transform: translateX(-50%);
-    padding: 3px 8px;
-    border: 1px solid rgba(79, 220, 255, .5);
+    padding: 4px 9px;
+    border: 1px solid rgba(79,220,255,.55);
     border-radius: 20px;
     color: #8beeff;
-    background: rgba(0, 20, 35, .38);
-    font-size: 5px;
-    letter-spacing: 1.4px;
+    background: rgba(0,20,35,.45);
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1px;
     white-space: nowrap;
     text-shadow: 0 0 5px #00bfff;
 }
 
-/* =========================
-   FOOTER
-   ========================= */
-
-.footer {
-    position: absolute;
-    z-index: 10;
-    left: 44px;
-    right: 44px;
-    bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    font-size: 5px;
-    letter-spacing: 1px;
-    color: rgba(126, 221, 238, .7);
-}
-
-/* =========================
-   DECORATIVE HUD LINES
-   ========================= */
+/* LIGNES */
 
 .line {
     position: absolute;
     z-index: 5;
     height: 1px;
-    background: rgba(60, 210, 255, .4);
-    box-shadow: 0 0 5px rgba(0, 180, 255, .45);
+    background: rgba(60,210,255,.45);
+    box-shadow: 0 0 5px rgba(0,180,255,.5);
 }
 
 .line.left {
     left: 22px;
     top: 52%;
-    width: 48px;
+    width: 43px;
 }
 
 .line.right {
     right: 22px;
     top: 52%;
-    width: 48px;
+    width: 43px;
 }
+
+/* ARC */
 
 .arc {
     position: absolute;
     z-index: 4;
-    width: 230px;
-    height: 230px;
-    left: 45px;
-    top: 45px;
-    border: 1px solid rgba(60, 205, 255, .16);
+    width: 240px;
+    height: 240px;
+    left: 40px;
+    top: 40px;
+    border: 1px solid rgba(60,205,255,.14);
     border-radius: 50%;
 }
 
-/* =========================
-   DANGER MODE
-   ========================= */
+/* FOOTER */
+
+.footer {
+    position: absolute;
+    z-index: 10;
+    left: 57px;
+    right: 57px;
+    bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 6px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: rgba(126,221,238,.75);
+}
+
+/* DANGER */
 
 .danger .gauge-value {
     color: #ff5276;
     text-shadow:
-        0 0 5px #ff003d,
-        0 0 13px rgba(255, 0, 70, .8);
+        0 0 6px #ff003d,
+        0 0 14px rgba(255,0,70,.85);
 }
 
 #screen.danger::after {
-    border-color: rgba(255, 45, 90, .85);
+    border-color: rgba(255,45,90,.85);
     box-shadow:
-        0 0 10px rgba(255, 0, 60, .8),
-        inset 0 0 20px rgba(255, 0, 60, .25);
-}
-
-/* =========================
-   NO DATA
-   ========================= */
-
-[data-value] {
-    min-width: 1px;
+        0 0 10px rgba(255,0,60,.8),
+        inset 0 0 20px rgba(255,0,60,.25);
 }
 </style>
 </head>
@@ -371,42 +325,36 @@ body {
         <span id="status" class="status">WAITING CAM</span>
     </div>
 
-    <!-- CPU -->
     <div id="cpu" class="gauge">
         <div class="gauge-label">CPU</div>
         <div id="cpuTemp" class="gauge-value">--</div>
         <div class="gauge-unit">°C</div>
     </div>
 
-    <!-- GPU -->
     <div id="gpu" class="gauge">
         <div class="gauge-label">GPU</div>
         <div id="gpuTemp" class="gauge-value">--</div>
         <div class="gauge-unit">°C</div>
     </div>
 
-    <!-- RAM -->
     <div id="ram" class="gauge">
         <div class="gauge-label">RAM</div>
         <div id="ramPercent" class="gauge-value">--</div>
         <div class="gauge-unit">%</div>
     </div>
 
-    <!-- KRAKEN -->
     <div id="kraken" class="gauge">
         <div class="gauge-label">LIQUID</div>
         <div id="liquidTemp" class="gauge-value">--</div>
         <div class="gauge-unit">°C</div>
     </div>
 
-    <!-- CPU DATA -->
     <div class="card card-left">
         <div class="card-line">LOAD <strong id="cpuLoad">--</strong></div>
         <div class="card-line">FREQ <strong id="cpuFreq">--</strong></div>
         <div class="card-line">POWER <strong id="cpuPower">--</strong></div>
     </div>
 
-    <!-- GPU DATA -->
     <div class="card card-right">
         <div class="card-line">LOAD <strong id="gpuLoad">--</strong></div>
         <div class="card-line">FREQ <strong id="gpuFreq">--</strong></div>
@@ -434,12 +382,6 @@ body {
 <script>
 "use strict";
 
-/*
-    NZXT CAM Web Integration
-    LIVE DATA ONLY
-    Aucun chiffre simulé.
-*/
-
 const screen = document.getElementById("screen");
 const statusEl = document.getElementById("status");
 
@@ -456,112 +398,88 @@ const gpuPowerEl = document.getElementById("gpuPower");
 const ramPercentEl = document.getElementById("ramPercent");
 const liquidTempEl = document.getElementById("liquidTemp");
 
-function valueOrDash(value) {
-    return value === null ||
-           value === undefined ||
-           Number.isNaN(Number(value))
-        ? "--"
-        : value;
+function percent(value) {
+    if (value === null || value === undefined) return "--";
+    const n = Number(value);
+    return Number.isFinite(n) ? `${(n * 100).toFixed(0)}%` : "--";
 }
 
 function temp(value) {
     if (value === null || value === undefined) return "--";
-    return `${Number(value).toFixed(0)}`;
-}
-
-function percent(value) {
-    if (value === null || value === undefined) return "--";
-    return `${(Number(value) * 100).toFixed(0)}`;
+    const n = Number(value);
+    return Number.isFinite(n) ? n.toFixed(0) : "--";
 }
 
 function mhz(value) {
     if (value === null || value === undefined) return "--";
-    return `${Number(value).toFixed(0)} MHz`;
+    const n = Number(value);
+    return Number.isFinite(n) ? `${n.toFixed(0)} MHz` : "--";
 }
 
 function watts(value) {
     if (value === null || value === undefined) return "--";
-    return `${Number(value).toFixed(0)} W`;
+    const n = Number(value);
+    return Number.isFinite(n) ? `${n.toFixed(0)} W` : "--";
 }
 
 function update(data) {
 
     if (!data) return;
 
-    const cpu =
-        Array.isArray(data.cpus) && data.cpus.length
-            ? data.cpus[0]
-            : null;
-
-    const gpu =
-        Array.isArray(data.gpus) && data.gpus.length
-            ? data.gpus[0]
-            : null;
-
+    const cpu = data.cpus?.[0] || null;
+    const gpu = data.gpus?.[0] || null;
     const ram = data.ram || null;
     const kraken = data.kraken || null;
 
-    /* =========================
-       CPU
-       ========================= */
+    /* CPU */
 
-    if (cpu) {
-        cpuTempEl.textContent = temp(cpu.temperature);
-        cpuLoadEl.textContent = percent(cpu.load) === "--"
-            ? "--"
-            : `${percent(cpu.load)}%`;
-        cpuFreqEl.textContent = mhz(cpu.frequency);
-        cpuPowerEl.textContent = watts(cpu.power);
-    } else {
-        cpuTempEl.textContent = "--";
-        cpuLoadEl.textContent = "--";
-        cpuFreqEl.textContent = "--";
-        cpuPowerEl.textContent = "--";
-    }
+    cpuTempEl.textContent = cpu
+        ? temp(cpu.temperature)
+        : "--";
 
-    /* =========================
-       GPU
-       ========================= */
+    cpuLoadEl.textContent = cpu
+        ? percent(cpu.load)
+        : "--";
 
-    if (gpu) {
-        gpuTempEl.textContent = temp(gpu.temperature);
-        gpuLoadEl.textContent = percent(gpu.load) === "--"
-            ? "--"
-            : `${percent(gpu.load)}%`;
-        gpuFreqEl.textContent = mhz(gpu.frequency);
-        gpuPowerEl.textContent = watts(gpu.power);
-    } else {
-        gpuTempEl.textContent = "--";
-        gpuLoadEl.textContent = "--";
-        gpuFreqEl.textContent = "--";
-        gpuPowerEl.textContent = "--";
-    }
+    cpuFreqEl.textContent = cpu
+        ? mhz(cpu.frequency)
+        : "--";
 
-    /* =========================
-       RAM
-       NZXT CAM: MiB
-       ========================= */
+    cpuPowerEl.textContent = cpu
+        ? watts(cpu.power)
+        : "--";
+
+    /* GPU */
+
+    gpuTempEl.textContent = gpu
+        ? temp(gpu.temperature)
+        : "--";
+
+    gpuLoadEl.textContent = gpu
+        ? percent(gpu.load)
+        : "--";
+
+    gpuFreqEl.textContent = gpu
+        ? mhz(gpu.frequency)
+        : "--";
+
+    gpuPowerEl.textContent = gpu
+        ? watts(gpu.power)
+        : "--";
+
+    /* RAM - CAM fournit des MiB */
 
     if (
         ram &&
-        ram.totalSize !== null &&
-        ram.totalSize !== undefined &&
-        ram.inUse !== null &&
-        ram.inUse !== undefined
+        ram.totalSize != null &&
+        ram.inUse != null
     ) {
-        const totalMiB = Number(ram.totalSize);
-        const usedMiB = Number(ram.inUse);
+        const total = Number(ram.totalSize);
+        const used = Number(ram.inUse);
 
-        if (
-            Number.isFinite(totalMiB) &&
-            Number.isFinite(usedMiB) &&
-            totalMiB > 0
-        ) {
-            const ramPercent =
-                (usedMiB / totalMiB) * 100;
-
+        if (total > 0 && Number.isFinite(used)) {
             ramPercentEl.textContent =
-                ramPercent.toFixed(0);
+                ((used / total) * 100).toFixed(0);
         } else {
             ramPercentEl.textContent = "--";
         }
@@ -569,35 +487,21 @@ function update(data) {
         ramPercentEl.textContent = "--";
     }
 
-    /* =========================
-       KRAKEN LIQUID
-       ========================= */
+    /* LIQUIDE KRAKEN */
 
-    if (
-        kraken &&
-        kraken.liquidTemperature !== null &&
-        kraken.liquidTemperature !== undefined
-    ) {
-        liquidTempEl.textContent =
-            Number(kraken.liquidTemperature).toFixed(0);
-    } else {
-        liquidTempEl.textContent = "--";
-    }
+    liquidTempEl.textContent =
+        kraken?.liquidTemperature != null
+            ? temp(kraken.liquidTemperature)
+            : "--";
 
-    /* =========================
-       DANGER
-       ========================= */
+    /* DANGER */
 
     const cpuDanger =
-        cpu &&
-        cpu.temperature !== null &&
-        cpu.temperature !== undefined &&
+        cpu?.temperature != null &&
         Number(cpu.temperature) >= 80;
 
     const gpuDanger =
-        gpu &&
-        gpu.temperature !== null &&
-        gpu.temperature !== undefined &&
+        gpu?.temperature != null &&
         Number(gpu.temperature) >= 80;
 
     const danger = cpuDanger || gpuDanger;
@@ -609,35 +513,11 @@ function update(data) {
         danger ? "DANGER" : "CAM LIVE";
 }
 
-
-/*
-    NZXT CAM API
-*/
+/* NZXT CAM Web Integration */
 
 window.nzxt = window.nzxt || {};
 window.nzxt.v1 = window.nzxt.v1 || {};
-
 window.nzxt.v1.onMonitoringDataUpdate = update;
-
-
-/*
-    Respecte la forme fournie par CAM.
-    Pour le Kraken Z3, le layout reste circulaire.
-*/
-
-if (window.nzxt.v1.shape === "circle") {
-    document.documentElement.classList.add("round");
-}
-
-
-/*
-    Taille cible CAM.
-*/
-
-if (window.nzxt.v1.width && window.nzxt.v1.height) {
-    // Aucun redimensionnement forcé :
-    // le Kraken Z3 utilise son canvas 320x320.
-}
 </script>
 
 </body>
